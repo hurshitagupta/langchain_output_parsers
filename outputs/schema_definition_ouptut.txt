@@ -1,0 +1,16 @@
+=== VALID REVIEW ===
+sentiment=<Sentiment.MIXED: 'mixed'> score=0.8 reasons=['The acting was superb', 'The plot felt slow']
+Type: Review
+
+=== INVALID REVIEW ===
+Validation rejected invalid data.
+3 validation errors for Review
+sentiment
+  Input should be 'positive', 'negative', 'neutral' or 'mixed' [type=enum, input_value='excellent', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/enum
+score
+  Input should be less than or equal to 1 [type=less_than_equal, input_value=1.5, input_type=float]
+    For further information visit https://errors.pydantic.dev/2.12/v/less_than_equal
+reasons
+  List should have at most 3 items after validation, not 4 [type=too_long, input_value=['Reason 1', 'Reason 2', 'Reason 3', 'Reason 4'], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.12/v/too_long
