@@ -1,0 +1,3 @@
+=== STRUCTURED OUTPUT ===
+sentiment=<Sentiment.POSITIVE: 'positive'> score=0.9 reasons=['']
+Type: Review
