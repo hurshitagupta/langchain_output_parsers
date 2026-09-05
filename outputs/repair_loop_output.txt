@@ -1,0 +1,33 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\Hurshita Gupta\OneDrive\Desktop\langchain_output_parsers\repair_loop\repair_loop.py", line 129, in <module>
+    main()
+  File "C:\Users\Hurshita Gupta\OneDrive\Desktop\langchain_output_parsers\repair_loop\repair_loop.py", line 118, in main
+    result = analyse_feedback(
+             ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Hurshita Gupta\OneDrive\Desktop\langchain_output_parsers\repair_loop\repair_loop.py", line 112, in analyse_feedback
+    raise RuntimeError(
+RuntimeError: Parse failed after 2 attempts: 2 validation errors for Review
+score
+  Field required [type=missing, input_value={'sentiment': 'positive'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+reasons
+  Field required [type=missing, input_value={'sentiment': 'positive'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+Attempt 1/2
+Validation failed.
+1 validation error for Review
+reasons
+  Field required [type=missing, input_value={'sentiment': 'positive', 'score': 0.85}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+Retrying once with validation error appended.
+Attempt 2/2
+Validation failed.
+2 validation errors for Review
+score
+  Field required [type=missing, input_value={'sentiment': 'positive'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+reasons
+  Field required [type=missing, input_value={'sentiment': 'positive'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing

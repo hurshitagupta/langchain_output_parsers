@@ -133,3 +133,101 @@ The unit test uses a deterministic fake chain to avoid depending on an external 
 ### Result
 
 Task 2 successfully converts model responses into validated Pydantic objects using LangChain structured output. Raw or schema-invalid model output is not returned directly to the caller.
+
+---
+
+## Task 3 — Repair Loop
+
+### Objective
+
+Handle schema validation failures by giving the model one opportunity to repair its output while keeping the total number of attempts strictly bounded.
+
+### Implementation
+
+Task 3 extends the structured output implementation from Task 2 with a validation repair loop.
+
+The maximum number of attempts is:
+
+```python id="bzf8j7"
+MAX_ATTEMPTS = 2
+```
+
+This represents:
+
+* Attempt 1 — initial model response.
+* Attempt 2 — one repair attempt after validation failure.
+
+If the first response satisfies the `Review` schema, it is returned immediately.
+
+If Pydantic raises a `ValidationError`, the validation error is captured and appended to the next prompt. The model is then given one opportunity to correct its response.
+
+### Repair Message
+
+When validation fails, the error returned by Pydantic is included in the second request so that the model knows what was wrong with its previous output.
+
+For example, an invalid score such as:
+
+```text id="cblrtx"
+score = 5
+```
+
+can produce a validation error because the schema only allows values between `0` and `1`.
+
+The error is then included in the repair request rather than blindly repeating the original prompt.
+
+### Retry Types
+
+Two different retry mechanisms are used for different failure types:
+
+* **Model retry** — `max_retries` handles transient API/provider failures.
+* **Repair retry** — `MAX_ATTEMPTS` handles schema validation failures.
+
+The repair loop is explicitly capped at two total attempts.
+
+### Guardrails
+
+* **Step limit** — The repair loop is capped at `MAX_ATTEMPTS = 2`.
+* **Timeout** — Model calls use a configured per-call timeout.
+* **Retry** — Transient model retries are capped.
+* **Output limit** — Maximum model output tokens are limited.
+* **Input validation** — Empty and oversized feedback is rejected.
+* **Schema validation** — Every successful result must satisfy the `Review` Pydantic schema.
+* **Safe failure** — After both validation attempts fail, the function raises a `RuntimeError` rather than returning invalid output.
+* **Secret hygiene** — API configuration is loaded from environment variables.
+
+Persistent quarantine of outputs that still fail after repair is introduced in Task 4.
+
+### Run
+
+```bash id="xbp2ur"
+uv run python -m repair_loop.repair_loop
+```
+
+### Run Tests
+
+```bash id="kxfrvr"
+uv run pytest tests/test_repair_loop.py -v
+```
+
+### Evidence
+
+Execution and test outputs are saved in:
+
+```text id="56b5qk"
+outputs/repair_loop_output.txt
+outputs/repair_loop_test_output.txt
+```
+
+### Tests
+
+Task 3 includes two automated paths:
+
+* **Repair success** — The first response fails validation and the second response succeeds.
+* **Repair failure** — Both attempts fail validation and the function stops with a `RuntimeError`.
+
+The success test also verifies that exactly two calls were made, proving that one repair attempt occurred.
+
+### Result
+
+Task 3 implements a bounded validation-repair mechanism. Invalid structured output is never returned directly to the caller. A failed response receives one repair attempt using the original validation error, and execution stops safely if the corrected response still violates the schema.
+
