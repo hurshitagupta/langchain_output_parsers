@@ -1,0 +1,247 @@
+Run 1/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 2/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 3/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 4/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 5/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 6/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 7/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 8/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 9/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 10/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 11/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 12/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 13/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 14/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 15/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 16/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 17/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 18/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 19/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 20/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 21/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 22/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 23/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 24/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 25/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 26/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 27/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 28/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 29/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 30/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 31/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 32/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 33/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 34/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 35/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 36/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 37/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 38/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 39/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 40/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 41/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 42/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 43/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 44/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 45/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 46/50
+Attempt 1/2
+Validation failed.
+1 validation error for Review
+reasons
+  List should have at least 1 item after validation, not 0 [type=too_short, input_value=[], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.12/v/too_short
+Retrying once with validation error appended.
+Attempt 2/2
+Validation failed.
+Model output was not validated as Review.
+Parse failed after 2 attempts.
+Failure quarantined: quarantine\failure_20260906_125003_051631.json
+Parse failed: Parse failed after 2 attempts; quarantined at quarantine\failure_20260906_125003_051631.json
+Run 47/50
+Attempt 1/2
+Validation failed.
+1 validation error for Review
+reasons
+  List should have at least 1 item after validation, not 0 [type=too_short, input_value=[], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.12/v/too_short
+Retrying once with validation error appended.
+Attempt 2/2
+Validation failed.
+Model output was not validated as Review.
+Parse failed after 2 attempts.
+Failure quarantined: quarantine\failure_20260906_125008_306993.json
+Parse failed: Parse failed after 2 attempts; quarantined at quarantine\failure_20260906_125008_306993.json
+Run 48/50
+Attempt 1/2
+Validation failed.
+1 validation error for Review
+reasons
+  List should have at least 1 item after validation, not 0 [type=too_short, input_value=[], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.12/v/too_short
+Retrying once with validation error appended.
+Attempt 2/2
+Validation failed.
+Model output was not validated as Review.
+Parse failed after 2 attempts.
+Failure quarantined: quarantine\failure_20260906_125013_780375.json
+Parse failed: Parse failed after 2 attempts; quarantined at quarantine\failure_20260906_125013_780375.json
+Run 49/50
+Attempt 1/2
+Validation successful.
+Parse successful.
+Run 50/50
+Attempt 1/2
+Validation failed.
+1 validation error for Review
+reasons
+  Field required [type=missing, input_value={'sentiment': 'mixed', 'score': 0.6}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+Retrying once with validation error appended.
+Attempt 2/2
+Validation failed.
+Model output was not validated as Review.
+Parse failed after 2 attempts.
+Failure quarantined: quarantine\failure_20260906_125023_409069.json
+Parse failed: Parse failed after 2 attempts; quarantined at quarantine\failure_20260906_125023_409069.json
+
+=== FAILURE METRICS ===
+Total runs: 50
+Successful parses: 46
+Failed parses: 4
+Parse success rate: 92.00%
+Average latency: 3.007 seconds

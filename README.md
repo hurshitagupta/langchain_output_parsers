@@ -340,3 +340,99 @@ The failure test also checks the contents of the generated quarantine record to 
 ### Result
 
 Task 4 adds persistent failure handling to the structured output pipeline. Responses that remain invalid after the bounded repair attempt are blocked from the caller and saved as quarantine evidence for debugging and traceability.
+
+---
+
+## Task 5 — Failure Metrics
+
+### Objective
+
+Measure the reliability of the structured-output pipeline by running it 50 times and reporting the actual parse success rate.
+
+### Implementation
+
+Task 5 reuses the final parser from Task 4 rather than creating a separate parsing implementation.
+
+The experiment is configured with:
+
+```python id="rm7s9m"
+TOTAL_RUNS = 50
+```
+
+For each run, the parser processes the same feedback and the result is classified as either:
+
+* Successful — a validated `Review` object is returned.
+* Failed — the parser raises an exception after its validation, repair, and quarantine flow.
+
+The final success rate is calculated using:
+
+```python id="spx8nm"
+success_rate = (successes / runs) * 100
+```
+
+Average latency is also recorded to provide an additional measurable result.
+
+### Guardrails
+
+Task 5 reuses the guardrails already implemented in the parsing pipeline:
+
+* **Timeout** — Model calls are time-limited.
+* **Retry** — Provider retries are capped.
+* **Step limit** — Validation repair attempts are bounded.
+* **Input limit** — Invalid or oversized feedback is rejected.
+* **Output limit** — Maximum model output tokens are limited.
+* **Validation** — Only validated `Review` objects count as successful parses.
+* **Quarantine** — Unrecoverable failures are persisted before being rejected.
+* **Secret hygiene** — API configuration is loaded from environment variables.
+
+Task 5 also adds:
+
+* **Run limit** — The measurement experiment is capped at 50 runs.
+* **Invalid metric input handling** — `runs <= 0` is rejected.
+
+### Run
+
+```bash id="vq5pr3"
+uv run python -u -m failure_metrics.failure_metrics
+```
+
+### Run Tests
+
+```bash id="bb0t5l"
+uv run pytest tests/test_failure_metrics.py -v
+```
+
+### Evidence
+
+Execution and test outputs are saved in:
+
+```text id="gj74dq"
+outputs/failure_metrics_output.txt
+outputs/failure_metrics_tests_output.txt
+```
+
+### Tests
+
+Task 5 includes two automated measurement cases:
+
+* A mixed-result parser that produces 3 successes and 2 failures across 5 runs, verifying a success rate of `60%`.
+* A parser that fails every run, verifying a success rate of `0%`.
+
+The tests use deterministic fake parsers so the metric calculation can be verified without making external API calls.
+
+### Result
+
+Task 5 completes the assessment by measuring the reliability of the full structured-output pipeline over 50 real runs.
+
+The reported metrics include:
+
+```text id="u6zley"
+Total runs
+Successful parses
+Failed parses
+Parse success rate
+Average latency
+```
+
+This provides numerical evidence of how reliably the parser converts model responses into valid `Review` objects rather than relying on subjective observations.
+
