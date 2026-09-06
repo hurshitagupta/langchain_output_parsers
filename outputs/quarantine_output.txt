@@ -1,0 +1,18 @@
+Attempt 1/2
+Validation failed.
+1 validation error for Review
+score
+  Input should be less than or equal to 1 [type=less_than_equal, input_value=5, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.12/v/less_than_equal
+Retrying once with validation error appended.
+Attempt 2/2
+Validation failed.
+1 validation error for Review
+score
+  Input should be less than or equal to 1 [type=less_than_equal, input_value=5, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.12/v/less_than_equal
+Parse failed after 2 attempts.
+Failure quarantined: quarantine\failure_20260906_123445_199538.json
+
+=== QUARANTINE RESULT ===
+Parse failed after 2 attempts; quarantined at quarantine\failure_20260906_123445_199538.json

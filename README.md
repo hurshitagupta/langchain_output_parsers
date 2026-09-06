@@ -231,3 +231,112 @@ The success test also verifies that exactly two calls were made, proving that on
 
 Task 3 implements a bounded validation-repair mechanism. Invalid structured output is never returned directly to the caller. A failed response receives one repair attempt using the original validation error, and execution stops safely if the corrected response still violates the schema.
 
+---
+
+## Task 4 — Quarantine
+
+### Objective
+
+Preserve model outputs that still fail validation after the bounded repair attempt instead of silently discarding them or returning invalid data to the caller.
+
+### Implementation
+
+Task 4 extends the repair loop from Task 3.
+
+The validation flow remains the same:
+
+```text
+Attempt 1
+   ↓
+Pydantic Validation
+   ↓
+If invalid → append validation error
+   ↓
+Attempt 2
+   ↓
+Pydantic Validation
+```
+
+If the second attempt also fails, the failure is written to the `quarantine/` directory before the application raises the final error.
+
+A dedicated quarantine function:
+
+* Creates the quarantine directory when required.
+* Generates a unique JSON filename.
+* Stores failure information.
+* Returns the generated file path.
+
+This keeps failure persistence separate from the parsing and repair logic.
+
+### Quarantine Record
+
+A quarantined failure contains information such as:
+
+```json
+{
+  "feedback": "The movie was good.",
+  "error": "Validation error...",
+  "attempts": 2,
+  "timestamp": "..."
+}
+```
+
+The generated files are stored under:
+
+```text
+quarantine/
+```
+
+Each failure uses a unique filename so that previous failures are not overwritten.
+
+### Guardrails
+
+* **Step limit** — Repair attempts remain capped.
+* **Timeout** — Model calls use a configured timeout.
+* **Retry** — Provider-level retries are capped.
+* **Input limit** — Empty and oversized input is rejected before invocation.
+* **Output limit** — Maximum model output tokens are limited.
+* **Schema validation** — Every successful result must satisfy the `Review` schema.
+* **Safe failure** — Invalid data is never returned after validation failure.
+* **Quarantine** — Unrecoverable validation failures are persisted before raising the final error.
+* **Secret hygiene** — API configuration is loaded only from environment variables.
+
+### Run
+
+```bash
+uv run python -m quarantine.quarantine
+```
+
+### Run Tests
+
+```bash
+uv run pytest tests/test_quarantine.py -v
+```
+
+### Evidence
+
+Execution and automated test outputs are saved in:
+
+```text
+outputs/quarantine_output.txt
+outputs/quarantine_test_output.txt
+```
+
+Generated quarantine examples are stored in:
+
+```text
+quarantine/
+```
+
+### Tests
+
+Task 4 includes two automated paths:
+
+* **Success case** — A valid `Review` is returned and no quarantine file is created.
+* **Failure case** — Validation fails across all allowed attempts, a JSON quarantine file is written, and a `RuntimeError` is raised.
+
+The failure test also checks the contents of the generated quarantine record to confirm that meaningful failure information is preserved.
+
+### Result
+
+Task 4 adds persistent failure handling to the structured output pipeline. Responses that remain invalid after the bounded repair attempt are blocked from the caller and saved as quarantine evidence for debugging and traceability.

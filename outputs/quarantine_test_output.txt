@@ -1,0 +1,12 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Hurshita Gupta\OneDrive\Desktop\langchain_output_parsers\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Hurshita Gupta\OneDrive\Desktop\langchain_output_parsers
+configfile: pyproject.toml
+plugins: anyio-4.15.0, langsmith-0.12.1
+collecting ... collected 2 items
+
+tests/test_quarantine.py::test_quarantine_success PASSED                 [ 50%]
+tests/test_quarantine.py::test_quarantine_failure PASSED                 [100%]
+
+============================== 2 passed in 0.94s ==============================

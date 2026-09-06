@@ -1,0 +1,6 @@
+{
+  "feedback": "The movie was good.",
+  "error": "1 validation error for Review\nscore\n  Input should be less than or equal to 1 [type=less_than_equal, input_value=5, input_type=int]\n    For further information visit https://errors.pydantic.dev/2.12/v/less_than_equal",
+  "attempts": 2,
+  "timestamp": "2026-09-06T12:34:45.199538"
+}
